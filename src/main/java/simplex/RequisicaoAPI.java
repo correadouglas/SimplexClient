@@ -21,8 +21,9 @@ import java.net.URL;
  *
  * Implementacao Simplex Client.
  *
- * Douglas Henrique Silva Correa. Guilherme Silva Santos. Mateus Felipe Martins
- * Miranda.
+ * Douglas Henrique Silva Correa. 
+ * Guilherme Silva Santos. 
+ * Mateus Felipe Martins Miranda.
  *
  */
 public class RequisicaoAPI {
@@ -69,6 +70,28 @@ public class RequisicaoAPI {
         connection.disconnect();
 
         return retorno;
+    }
+    
+    /**
+     * main criado para testar integracao com a api.
+     * 
+     * @param args 
+     */
+    public static void main(String[] args) throws IOException {
+        // setando variaveis de teste
+        int objetivo = SimplexObjetivoEnum.MAXIMO.getValor();
+	double[] funcaoObjetivo = { 80, 60 };
+        double[][] restricoes = { { 4, 6 }, { 4, 2 }, { 0, 1 } };
+	double[] sinaisRestricoes = { SimplexSinaisEnum.MAIOR_QUE.getValor(), 
+                                      SimplexSinaisEnum.MENOR_QUE.getValor(), 
+                                      SimplexSinaisEnum.MENOR_QUE.getValor() };
+	double[] b = { 24, 16, 3 };
+        
+        // criando objeto de entrada para a api
+        SimplexEntradaJSON entrada = new SimplexEntradaJSON(objetivo, funcaoObjetivo, restricoes, sinaisRestricoes, b);
+        
+        // chamada a api
+        String saida = requestPOST(entrada.getJSON());
     }
 
 }
